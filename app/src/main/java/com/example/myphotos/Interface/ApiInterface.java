@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
     @GET("search/photos")
-    Call<SearchImage> searchPhotos(
+    Call<ImageModel> getPhotos(
             @Query("query")String query,
             @Query("page")int page,
             @Query("per_page")int per_page,
@@ -23,7 +23,7 @@ public interface ApiInterface {
     );
 
     @GET("photos/{id}")
-    Call<ImageModel> getPhotoDetails(
+    Call<SearchImage> searchImages(
             @Path("id")String id
     );
 

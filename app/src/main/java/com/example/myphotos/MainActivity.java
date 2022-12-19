@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayList<ImageModel> list;
-    private int page = 10;
+    private int page;
     private ProgressDialog dialog;
     GridLayoutManager manager;
 
@@ -89,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void getData() {
         isLoading = true;
-        ApiUtilities.getApiInterface().searchPhotos("Image",10,30,"portrait")
-                .enqueue(new Callback<SearchImage>() {
+        ApiUtilities.getApiInterface().getPhotos("Image",page,30,"portrait")
+                .enqueue(new Callback<ImageModel>() {
                     @Override
-                    public void onResponse(Call<SearchImage> call, Response<SearchImage> response) {
+                    public void onResponse(Call<ImageModel> call, Response<ImageModel> response) {
                         if (response.body() != null) {
                             SearchImage apiResponse = response.body();
                             list.addAll(apiResponse.getResults());
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     @Override
-                    public void onFailure(Call<SearchImage> call, Throwable t) {
+                    public void onFailure(Call<ImageModel> call, Throwable t) {
                         dialog.dismiss();
                         Log.d("ApiResponse", "Error" + t.getMessage());
                         Toast.makeText(MainActivity.this, "Error" + t.getMessage(), Toast.LENGTH_SHORT).show();
