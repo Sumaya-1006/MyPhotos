@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,9 +19,9 @@ import com.example.myphotos.model.ImageModel;
 
 import java.util.ArrayList;
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageViewHolder> {
-    private Context context;
-    private ArrayList<ImageModel> list;
+public class ImageAdapter extends RecyclerView.Adapter<ViewHolder> {
+    Context context;
+    ArrayList<ImageModel> list;
 
     public ImageAdapter(Context context, ArrayList<ImageModel> list) {
         this.context = context;
@@ -28,17 +29,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageViewHolder> {
     }
 
     @NonNull
-    @org.jetbrains.annotations.NotNull
     @Override
-    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.items,parent,false);
-        return new ImageViewHolder(view);
+        return new ViewHolder(view) {
+        };
     }
 
-
     @Override
-    public void onBindViewHolder(@NonNull ImageViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(list.get(position).getUrls().getRegular()).into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,18 +55,19 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageViewHolder> {
         notifyDataSetChanged();
     }
 
-    @Override
+   @Override
     public int getItemCount() {
         return list.size();
     }
 
 }
 
-class ImageViewHolder extends RecyclerView.ViewHolder {
+class ViewHolder extends RecyclerView.ViewHolder {
     ImageView imageView;
 
-    public ImageViewHolder(@NonNull View itemView) {
+    public ViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView = itemView.findViewById(R.id.imageViewId);
     }
 }
+

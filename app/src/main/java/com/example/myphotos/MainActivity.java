@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private int page;
     private ProgressDialog dialog;
     GridLayoutManager manager;
-
     private int pageSize = 30;
+    private int id = 1;
     private boolean isLoading;
     private boolean lastPage;
     ImageAdapter adapter;
@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int visibleItem = manager.getChildCount();
+                int item = manager.getChildCount();
                 int totalItem = manager.getItemCount();
                 int firstVisibleItemPo = manager.findFirstVisibleItemPosition();
 
                 if (!isLoading && !lastPage) {
-                    if ((visibleItem + firstVisibleItemPo >= totalItem) && firstVisibleItemPo >= 0
+                    if ((item + firstVisibleItemPo >= totalItem) && firstVisibleItemPo >= 0
                             && totalItem >= pageSize) {
                         page++;
                         getData();
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getData() {
         isLoading = true;
-        ApiUtilities.getApiInterface().getPhotos("Image",page,30,"portrait")
+        ApiUtilities.getApiInterface().getPhotos("Images",page,40,"portrait")
                 .enqueue(new Callback<ImageModel>() {
                     @Override
                     public void onResponse(Call<ImageModel> call, Response<ImageModel> response) {
@@ -104,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.d("ApiResponse", String.valueOf(list.size()));
                     }
-
-
 
                     @Override
                     public void onFailure(Call<ImageModel> call, Throwable t) {
@@ -125,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                searchImages(query);
                 dialog.show();
                 return true;
             }
@@ -136,6 +135,27 @@ public class MainActivity extends AppCompatActivity {
 
         });
         return true;
+    }
+
+    private void searchImages(String query) {
+        ApiUtilities.getApiInterface().searchImages(query).enqueue(new Callback<SearchImage>() {
+            @Override
+            public void onResponse(Call<SearchImage> call, Response<SearchImage> response) {
+                if (response.body() != null) {
+                    list.clear();
+                    list.addAll(response.body().getResults());
+                    adapter.updateDataSet(list);
+                    dialog.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SearchImage> call, Throwable t) {
+
+            }
+        });
+
     }
 
 }
