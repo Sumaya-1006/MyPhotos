@@ -28,7 +28,8 @@
             app:zoomage_maxScale="15"
             />
 
-      </ViewFlipper>
+
+  </ViewFlipper>
 
     <ImageButton
         android:id="@+id/wallpaperBtn"
@@ -48,5 +49,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view_flipper" />
 
+    <ImageButton
+        android:id="@+id/shareBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_share_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/downloadBtn"
+        app:layout_constraintStart_toEndOf="@+id/wallpaperBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
