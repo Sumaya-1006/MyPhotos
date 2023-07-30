@@ -15,12 +15,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.example.myphotos.adapter.ImageAdapter;
 import com.example.myphotos.model.ImageModel;
 import com.example.myphotos.model.SearchImage;
 import com.example.myphotos.utils.ApiUtilities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,14 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayList<ImageModel> list;
-    private int page;
+    public static  int page = 0;
     private ProgressDialog dialog;
     GridLayoutManager manager;
     private int pageSize = 30;
-    private int id = 1;
     private boolean isLoading;
     private boolean lastPage;
     ImageAdapter adapter;
+    ImageSlider imageSlider;
+    int regular = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("ApiResponse", "Error" + t.getMessage());
                         Toast.makeText(MainActivity.this, "Error" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
-
                     }
                 });
     }
@@ -158,4 +162,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

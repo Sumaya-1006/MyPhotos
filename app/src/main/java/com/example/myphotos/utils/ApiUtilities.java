@@ -18,7 +18,6 @@ public class ApiUtilities {
     public static final String API_KEY = "F2rBaehdWmUJv8dLUfJpHlrb6WKs-c4Tf0SHHDe9HhM";
 
     public static Retrofit retrofit = null;
-
     public static ApiInterface getApiInterface() {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -43,6 +42,7 @@ public class ApiUtilities {
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();
+
 
         }
         return retrofit.create(ApiInterface.class);

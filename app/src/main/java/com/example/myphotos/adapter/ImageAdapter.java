@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.denzcoskun.imageslider.ImageSlider;
 import com.example.myphotos.FullImageActivity;
 import com.example.myphotos.R;
 import com.example.myphotos.model.ImageModel;
@@ -26,6 +27,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ViewHolder> {
     public ImageAdapter(Context context, ArrayList<ImageModel> list) {
         this.context = context;
         this.list = list;
+
     }
 
     @NonNull
@@ -33,6 +35,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.items,parent,false);
+
         return new ViewHolder(view) {
         };
     }
@@ -46,8 +49,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ViewHolder> {
                 Intent intent = new Intent(context, FullImageActivity.class);
                 intent.putExtra("image",list.get(position).getUrls().getRegular());
                 context.startActivity(intent);
+
             }
         });
+
     }
 
     public void updateDataSet(ArrayList<ImageModel> l){
@@ -55,7 +60,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ViewHolder> {
         notifyDataSetChanged();
     }
 
-   @Override
+    @Override
     public int getItemCount() {
         return list.size();
     }
@@ -70,4 +75,5 @@ class ViewHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.imageViewId);
     }
 }
+
 

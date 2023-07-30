@@ -1,10 +1,10 @@
 package com.example.myphotos.model;
 
 public class UrlsModel {
-
     String regular;
 
     public UrlsModel(String regular) {
+
         this.regular = regular;
     }
 

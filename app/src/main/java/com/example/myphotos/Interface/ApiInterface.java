@@ -2,6 +2,9 @@ package com.example.myphotos.Interface;
 
 import com.example.myphotos.model.ImageModel;
 import com.example.myphotos.model.SearchImage;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -20,7 +23,7 @@ public interface ApiInterface {
     @GET("/search/photos")
     Call<SearchImage> searchImages(
             @Query("query")String query
-           // @Path("id")String id
     );
+
 
 }
